@@ -1,12 +1,22 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import { config } from "@gluestack-ui/config";
 import { AppRoutes } from "./src/routes/AppRoutes";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
+import AppLoading from "expo-app-loading";
 import { NavigationContainer } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useFonts } from "expo-font";
+let customFonts = {
+  Cherry: require("./assets/fonts/CherryBombOne.ttf"),
+};
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Cherry: require("./assets/fonts/CherryBombOne.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return <></>;
+  }
+
   return (
     <NavigationContainer>
       <GluestackUIProvider config={config}>
@@ -15,12 +25,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

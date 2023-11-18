@@ -10,7 +10,7 @@ export const AppRoutes = () => {
         screenOptions={{
           headerShown: false,
           gestureEnabled: false,
-          statusBarTranslucent: true,
+          statusBarColor: "#260064",
         }}
         initialRouteName={"HOME"}
       >
