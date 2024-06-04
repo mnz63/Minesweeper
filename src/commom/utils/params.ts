@@ -2,9 +2,9 @@ import { Dimensions } from "react-native"
 
 
 export const params = {
-  blockSize: 30,
+  blockSize: 35,
   borderSize: 3,
-  borderRadius: 4,
+  borderRadius: 3,
   fontSize: 18,
   headerRatio: 0.50,
   dificultLevel: 0.1,

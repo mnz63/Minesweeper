@@ -1,74 +1,143 @@
 import {
-  Actionsheet,
-  ActionsheetBackdrop,
-  ActionsheetContent,
-  ActionsheetDragIndicator,
-  ActionsheetDragIndicatorWrapper,
-  ActionsheetItem,
-  ActionsheetItemText,
   Button,
-  ButtonIcon,
   ButtonText,
   HStack,
+  Image,
   Text,
-} from "@gluestack-ui/themed";
-import { View, Image } from "@gluestack-ui/themed";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState } from "react";
-import { params } from "../../commom/utils/params";
-import Flag from "../../../assets/img/flag.png";
-import DificultySelect from "../DificultySelect";
+  View,
+} from '@gluestack-ui/themed'
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from '@react-navigation/native'
+import { Stopwatch } from 'react-native-stopwatch-timer'
 
 type Props = {
-  flagsAmount?: number;
-  onResetGame?: () => void;
-  onSelectDificulty?: (dificulty: number) => void;
-};
+  flagsAmount?: number
+  onResetGame?: () => void
+  resetStopwatch?: boolean
+  isStopwatchStart?: boolean
+}
 
 export default function Header({
   flagsAmount,
   onResetGame,
-  onSelectDificulty,
-}: Props) {
-  const flagURI = "https://i.ibb.co/w786Cjq/flag.png";
+  resetStopwatch,
+  isStopwatchStart,
+}: Readonly<Props>) {
+  const flagURI = 'https://i.ibb.co/w786Cjq/flag.png'
+  const { navigate }: NavigationProp<ParamListBase> = useNavigation()
 
   return (
-    <View h={"$32"} bgColor="red.500" padding={20} w={"100%"} mb={20} mt={20}>
-      <HStack justifyContent={"space-around"}>
+    <View
+      h={'$32'}
+      justifyContent="center"
+      w={'100%'}
+      mb={20}
+      mt={20}
+    >
+      <HStack justifyContent={'space-evenly'}>
         <View
-          flexDirection={"row"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          bgColor="#F2f2f"
+          flexDirection={'row'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          bgColor="#1F1D47"
+          borderRadius={'$2xl'}
+          w={'$40'}
+          h={58}
         >
           <Image
-            w={"$10"}
-            h={"$10"}
+            w={'$11'}
+            h={'$10'}
             source={{
               uri: flagURI,
             }}
             alt="image"
           />
-          <Text color={"#fff"} fontFamily="Cherry" fontSize={20}>
+          <Text
+            color={'#fff'}
+            fontFamily="Cherry"
+            fontSize={24}
+            lineHeight={30}
+          >
             = {flagsAmount || 0}
           </Text>
         </View>
-        <Button
-          bgColor="#5900ff"
-          borderRadius={"$lg"}
-          $active-bgColor="#4000b8"
-          onPress={onResetGame}
+        <View
+          flexDirection={'row'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          bgColor="#1F1D47"
+          borderRadius={'$2xl'}
+          h={58}
+          px={10}
+          gap={10}
         >
-          <ButtonText color={"#fff"} fontSize={20} fontFamily="Cherry">
-            Reiniciar{" "}
-          </ButtonText>
-          <MaterialCommunityIcons name="restart" size={24} color="#FFF" />
-        </Button>
+          <Stopwatch
+            laps={false}
+            start={isStopwatchStart}
+            reset={resetStopwatch}
+            options={{
+              text: {
+                fontSize: 20,
+                color: '#FFF',
+                marginLeft: 7,
+                fontFamily: 'Cherry',
+              },
+            }}
+          />
+          <Image
+            w={'$12'}
+            h={'$16'}
+            source={require('../../../assets/img/bomb.png')}
+            alt="image"
+          />
+        </View>
       </HStack>
-
-      <DificultySelect
-        onSelectDificulty={(dificulty) => onSelectDificulty(dificulty)}
-      />
+      <View
+        w={'100%'}
+        alignItems="center"
+        flexDirection="row"
+        mt={10}
+        justifyContent="space-around"
+        px={10}
+      >
+        <Button
+          variant="outline"
+          borderColor={'#48319D'}
+          $active-bgColor="#4000b83d"
+          borderRadius={'$xl'}
+          onPress={onResetGame}
+          w={'45%'}
+          h={50}
+        >
+          <ButtonText
+            color={'#FFF'}
+            fontSize={18}
+            fontFamily="Cherry"
+          >
+            Reiniciar
+          </ButtonText>
+        </Button>
+        <Button
+          variant="outline"
+          borderColor={'#48319D'}
+          $active-bgColor="#4000b83d"
+          borderRadius={'$xl'}
+          onPress={() => navigate('HOMESCREEN')}
+          w={'48%'}
+          h={50}
+        >
+          <ButtonText
+            color={'#FFF'}
+            fontSize={18}
+            fontFamily="Cherry"
+          >
+            Voltar ao menu
+          </ButtonText>
+        </Button>
+      </View>
     </View>
-  );
+  )
 }

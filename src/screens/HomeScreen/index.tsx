@@ -1,134 +1,61 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Alert, Text, Image } from "react-native";
-import { params } from "../../commom/utils/params";
 
-import { View } from "@gluestack-ui/themed";
-import Board from "../../components/Board";
+import { View, Text, Button, ButtonText } from "@gluestack-ui/themed";
+import DificultySelect from "../../components/DificultySelectModal";
+import { params } from "../../commom/utils/params";
 import {
-  cloneBoard,
-  createMinedBoard,
-  flagsUsed,
-  hadExplosion,
-  invertFlag,
-  openField,
-  showMines,
-  wonGame,
-} from "../../commom/utils/functions";
-import { useState } from "react";
-import Header from "../../components/Header";
-import CustomModal from "../../components/Modal";
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
+import { Image, TouchableOpacity } from "react-native";
+import HomeButton from "../../components/HomeButton";
+import DificultySelectModal from "../../components/DificultySelectModal";
 
 export default function HomeScreen() {
-  const collumns = params.getCollumnsAmount() - 2;
-  const rows = params.getRowsAmount();
-  const minesAmount = Math.ceil(collumns * rows * params.dificultLevel);
+  const { navigate }: NavigationProp<ParamListBase> = useNavigation();
 
-  const createState = () => {
-    return {
-      board: createMinedBoard(rows, collumns, minesAmount),
-      won: false,
-      lost: false,
-    };
-  };
-
-  const [boardState, setBoardState] = useState(createState());
-  const [showModal, setShowModal] = useState({
-    show: false,
-    type: "WON",
-  });
-  const [loading, setLoading] = useState(false);
-
-  const resetGame = () => {
-    setShowModal({
-      show: false,
-      type: "WON",
-    });
-    setLoading(true);
-    setTimeout(() => {
-      setBoardState(createState());
-      setLoading(false);
-    }, 1000);
-  };
-
-  const onOpenField = (row, collumn) => {
-    const board = cloneBoard(boardState?.board);
-    openField(board, row, collumn);
-    const lost = hadExplosion(board);
-    const won = wonGame(board);
-
-    if (lost) {
-      showMines(board);
-      setShowModal({
-        show: true,
-        type: "LOST",
-      });
-    }
-
-    if (won) {
-      setShowModal({
-        show: true,
-        type: "WON",
-      });
-    }
-
-    setBoardState({ board, lost, won });
-  };
-
-  const onSelectField = (row, collumn) => {
-    const board = cloneBoard(boardState.board);
-    invertFlag(board, row, collumn);
-    const won = wonGame(board);
-
-    if (won) {
-      Alert.alert("Você venceu!");
-    }
-
-    setBoardState({ ...boardState, board, won });
-  };
-
-  const selectDificulty = (dificulty) => {
-    params.dificultLevel = dificulty;
-    resetGame();
-  };
-
-  const flagURI = "https://i.ibb.co/yVKFYtd/flag.png";
   return (
     <SafeAreaView>
-      <View backgroundColor={"#260064"} h={"100%"} alignItems="center">
-        <CustomModal
-          onCloseModal={() => setShowModal({ show: false, type: "WON" })}
-          onResetGame={() => resetGame()}
-          showModal={showModal.show}
-          type={showModal.type}
-        />
-        <Header
-          onResetGame={() => resetGame()}
-          onSelectDificulty={(dificulty) => selectDificulty(dificulty)}
-          flagsAmount={minesAmount - flagsUsed(boardState.board)}
-        />
-        <Board
-          board={boardState?.board}
-          onOpenField={onOpenField}
-          onSelectField={onSelectField}
-        />
-        <View marginTop={"$1/4"} flexDirection="row" gap={5}>
-          <Text
-            style={{
-              color: "#FFF",
-              fontSize: 15,
-              fontFamily: "Cherry",
-            }}
-          >
-            Pressione e segure para adicionar uma bandeira.
-          </Text>
+      <View h={"100%"} alignItems="center" justifyContent="center">
+        <View alignItems="center">
           <Image
-            width={18}
-            height={18}
-            source={{
-              uri: flagURI,
+            source={require("../../../assets/img/bomb.png")}
+            alt="bomb"
+            style={{
+              width: 73,
+              height: 98,
             }}
-            alt="image"
           />
+          <Text
+            color="#FFF"
+            fontFamily="Cherry"
+            fontSize={32}
+            lineHeight={32}
+            mt={10}
+          >
+            MINESWEEPER
+          </Text>
+        </View>
+        <View
+          w={"$5/6"}
+          alignItems="center"
+          h={"$72"}
+          justifyContent="space-between"
+          mt={"$1/6"}
+        >
+          <HomeButton
+            label="Jogar"
+            background="#48319D"
+            onPress={() => navigate("GAMESCREEN")}
+          />
+          <HomeButton
+            label="Dificuldade"
+            background="#319D76"
+            type="DIFICULTY"
+          />
+          <HomeButton label="Multiplayer" background="#1F1D47" />
+          <HomeButton label="Configurações" background="#48319D" />
         </View>
       </View>
     </SafeAreaView>

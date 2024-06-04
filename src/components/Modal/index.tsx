@@ -46,7 +46,7 @@ export default function CustomModal({
             size="sm"
             action="primary"
             borderWidth="$0"
-            onPress={onResetGame}
+            onPress={() => (type === "LOST" ? onCloseModal() : onResetGame())}
           >
             <ButtonText>Continuar</ButtonText>
           </Button>

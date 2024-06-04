@@ -96,8 +96,6 @@ export const pendding = (field) => {
 }
 
 export const wonGame = (board) => {
-  
-  console.log(fields(board).filter(pendding).length);
   return fields(board).filter(pendding).length === 0
 }
 

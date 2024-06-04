@@ -39,6 +39,9 @@
     "owner": "danilo_h63",
     "updates": {
       "url": "https://u.expo.dev/3ff8d3bb-85be-4ab2-8d14-2a1c48aee82e"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
