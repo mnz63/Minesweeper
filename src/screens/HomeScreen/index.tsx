@@ -1,26 +1,23 @@
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { View, Text, Button, ButtonText } from "@gluestack-ui/themed";
-import DificultySelect from "../../components/DificultySelectModal";
-import { params } from "../../commom/utils/params";
+import { Text, View } from '@gluestack-ui/themed'
 import {
   NavigationProp,
   ParamListBase,
   useNavigation,
-} from "@react-navigation/native";
-import { Image, TouchableOpacity } from "react-native";
-import HomeButton from "../../components/HomeButton";
-import DificultySelectModal from "../../components/DificultySelectModal";
+} from '@react-navigation/native'
+import { Image } from 'react-native'
+import HomeButton from '../../components/HomeButton'
 
 export default function HomeScreen() {
-  const { navigate }: NavigationProp<ParamListBase> = useNavigation();
+  const { navigate }: NavigationProp<ParamListBase> = useNavigation()
 
   return (
     <SafeAreaView>
-      <View h={"100%"} alignItems="center" justifyContent="center">
+      <View h={'100%'} alignItems="center" justifyContent="center">
         <View alignItems="center">
           <Image
-            source={require("../../../assets/img/bomb.png")}
+            source={require('../../../assets/img/bomb.png')}
             alt="bomb"
             style={{
               width: 73,
@@ -38,26 +35,24 @@ export default function HomeScreen() {
           </Text>
         </View>
         <View
-          w={"$5/6"}
+          w={'$5/6'}
           alignItems="center"
-          h={"$72"}
           justifyContent="space-between"
-          mt={"$1/6"}
+          mt={'$16'}
+          gap={20}
         >
           <HomeButton
             label="Jogar"
             background="#48319D"
-            onPress={() => navigate("GAMESCREEN")}
+            onPress={() => navigate('GAMESCREEN')}
           />
           <HomeButton
             label="Dificuldade"
             background="#319D76"
             type="DIFICULTY"
           />
-          <HomeButton label="Multiplayer" background="#1F1D47" />
-          <HomeButton label="Configurações" background="#48319D" />
         </View>
       </View>
     </SafeAreaView>
-  );
+  )
 }

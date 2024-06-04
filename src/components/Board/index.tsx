@@ -44,6 +44,12 @@ export default function Board({
       justifyContent={'space-between'}
       width={boardWidth}
       gap={5}
+      w={'98%'}
+      borderRadius={'$xl'}
+      p={10}
+      bgColor={'#0f014f8b'}
+      borderWidth={3}
+      borderColor={'#48319D'}
     >
       {row}
     </View>

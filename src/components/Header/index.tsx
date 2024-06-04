@@ -26,7 +26,6 @@ export default function Header({
   resetStopwatch,
   isStopwatchStart,
 }: Readonly<Props>) {
-  const flagURI = 'https://i.ibb.co/w786Cjq/flag.png'
   const { navigate }: NavigationProp<ParamListBase> = useNavigation()
 
   return (
@@ -42,17 +41,13 @@ export default function Header({
           flexDirection={'row'}
           justifyContent={'center'}
           alignItems={'center'}
-          bgColor="#1F1D47"
-          borderRadius={'$2xl'}
           w={'$40'}
           h={58}
         >
           <Image
-            w={'$11'}
+            w={'$10'}
             h={'$10'}
-            source={{
-              uri: flagURI,
-            }}
+            source={require('../../../assets/img/flag.png')}
             alt="image"
           />
           <Text
@@ -61,6 +56,7 @@ export default function Header({
             fontSize={24}
             lineHeight={30}
           >
+            {' '}
             = {flagsAmount || 0}
           </Text>
         </View>
@@ -68,8 +64,6 @@ export default function Header({
           flexDirection={'row'}
           justifyContent={'center'}
           alignItems={'center'}
-          bgColor="#1F1D47"
-          borderRadius={'$2xl'}
           h={58}
           px={10}
           gap={10}
